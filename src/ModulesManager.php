@@ -20,7 +20,7 @@
 
 namespace Lucid\Modular;
 
-use Panel\Models\HookPosition;
+use Lucid\Modular\HookPosition;
 
 class ModulesManager
 {
@@ -114,10 +114,10 @@ class ModulesManager
     public static function getAsset($module,$path){
         $path = str_replace(['../','..\\'],'',$path);
 
-        if(!file_exists(app_path("/Modules/$module/assets/$path")))
+        if(!file_exists(config('modules.path')."$module/assets/$path"))
             abort(404);
 
-        return response()->download(app_path("/Modules/$module/assets/$path"),null,['Content-Type' => ''],'inline');
+        return response()->download(config('modules.path')."$module/assets/$path",null,['Content-Type' => ''],'inline');
     }
 
     /**
