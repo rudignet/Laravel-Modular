@@ -41,7 +41,7 @@ class migrate extends Command
     public function handle()
     {
         $moduleName = $this->argument('name');
-        $path = __DIR__."/../$moduleName/migrations/";
+        $path = config('modules.path')."$moduleName/migrations/";
         if(!is_dir($path)) {
             $this->error('There\'s not any module with name ' . $moduleName . ' or it hasn\'t a migrations folder');
             return false;
