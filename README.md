@@ -60,5 +60,32 @@ After register a method on your module you can acces from anywhere using
 
 ```callModuleFuncOrFail(string Name, array Params = [],string Message = '')``` will generate an exception if Name has not been registered, in this case Message it's the message will be show by the generated exception. Ex 'You must to install x module' 
 	
+##Assets:
+Each module can have his own public files, to create public content just put ir into your module assets folder, this content will be putted into the next public url
+{your_laravel_base_url}/modules/{moduleName}/{path_to_your_file_from_assets}
+
+For security reasons ../ is not allowed into paths
+
+#ModulesManager utilities:
+
+##Application messages:
+You can register application messages with the method ```ModulesManager::displayHeaderMessage(string $message, string $type = 'danger', string $title = '', bool $dismissible = true, string $icon = '') ```
+before you can get your messages at any time with  ```ModulesManager::getHeaderMessages()``` As an example you can register your module error messages and use getHeaderMessages to whow them into your app
+
+##Static arrays ::css y ::js
+This two static arrays of ModulesManager allow you to inject some css and js filenames from your modules, Ex: ```ModulesManager::js[] = '/modules/MyModule/js/test.js'``` 
+After this you can get all filenames accessing ```ModulesManager::js``` or ```ModulesManager::css``` wherever you need, as an example you can use this arrays into your header template to load all files needed by your modules
+
+Remember that if you want to use a file from your module assets folder you must to use his public path /modules/{moduleName}/{path_to_your_file_from_assets}
+
+##Migrations
+To execute your module migrations run ```artisan modules:migrate ModuleName```
+
+If you want to rollback a migration use ```artisan modules:migrate ModuleName --down```
+
+#Tests
+To execute your module tests run ```artisan modules:test ModuleName``` or just ```artisan modules:test``` if you want to run all activated modules tests
+
+Remember all test will be runned as if it's into your laravel test folder and not into your module test folder, then all test must to extend from TestBase without any namespace
 	
 	
