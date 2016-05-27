@@ -6,20 +6,23 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
 {
     public function boot()
     {
+        $this->publishes([ __DIR__.'/modules.php' => config_path('modules.php') ]);
+        
         $modules = config('modules._modules',[]);
+        $path = config('modules.path',app_path('Modules/'));
 
         foreach ($modules as $module) {
-            if(file_exists(__DIR__.'/'.$module.'/boot.php')) {
-                include __DIR__.'/'.$module.'/boot.php';
+            if(file_exists($path.$module.'/boot.php')) {
+                include $path.$module.'/boot.php';
             }
-            if(is_dir(__DIR__.'/'.$module.'/views')) {
-                $this->loadViewsFrom(__DIR__.'/'.$module.'/views', $module);
+            if(is_dir($path.$module.'/views')) {
+                $this->loadViewsFrom($path.$module.'/views', $module);
             }
-            if(file_exists(__DIR__.'/'.$module.'/config.php')) {
-                $this->mergeConfigFrom(__DIR__.'/'.$module.'/config.php', $module);
+            if(file_exists($path.$module.'/config.php')) {
+                $this->mergeConfigFrom($path.$module.'/config.php', $module);
             }
-            if(is_dir(__DIR__.'/'.$module.'/lang')) {
-                $this->loadTranslationsFrom(__DIR__.'/'.$module.'/lang', $module);
+            if(is_dir($path.$module.'/lang')) {
+                $this->loadTranslationsFrom($path.$module.'/lang', $module);
             }
         }
 
@@ -30,6 +33,8 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
     }
 
     public function register(){
+        $this->mergeConfigFrom(__DIR__.'/modules.php', 'modules'); 
+
         $this->app->singleton(ModulesManager::class, function ($app) {
             return new ModulesManager();
         });
