@@ -9,7 +9,7 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
         $this->publishes([ __DIR__.'/modules.php' => config_path('modules.php') ]);
         
         $modules = config('modules._modules',[]);
-        $path = config('modules.path',app_path('Modules/'));
+        $path = config('modules.path');
 
         foreach ($modules as $module) {
             if(file_exists($path.$module.'/boot.php')) {
