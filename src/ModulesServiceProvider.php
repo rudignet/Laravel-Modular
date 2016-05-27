@@ -1,6 +1,6 @@
 <?php
 
-namespace Panel\Modules;
+namespace Lucid\Modular;
 
 class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
 {
