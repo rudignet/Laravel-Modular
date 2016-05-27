@@ -9,7 +9,7 @@ Structure to use laravel as modular system
 
 #Create New Module:
 1. Create your module structure with ```php artisan modules:new ModuleName```
-2. Activate your module with ```php artisan modules:activate ModuleName``` (This will add into modules.php the name of the module to be loaded)
+2. Activate your module with ```php artisan modules:enable ModuleName``` (This will add into modules.php the name of the module to be loaded)
 
 ##Modules structure
  * boot.php => I'ts loaded when module its instanciated, place here your module routes, hooks, at any thing we enat to load on module boot
