@@ -1,6 +1,6 @@
 <?php
 
-namespace Panel\Modules\commands;
+namespace Lucid\Modular\commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
