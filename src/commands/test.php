@@ -51,7 +51,7 @@ class test extends Command
 
     public function testModule($moduleName){
 
-        $path = __DIR__."/../$moduleName/tests/";
+        $path = config('modules.path')."$moduleName/tests/";
         if(!is_dir($path) || !count(\File::allFiles($path))) {
             $this->warn('No tests found for module ' . $moduleName);
             return false;
