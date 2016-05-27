@@ -44,7 +44,10 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
 
         $this->commands([
             'Lucid\Modular\commands\migrate',
-            'Lucid\Modular\commands\test'
+            'Lucid\Modular\commands\test',
+            'Lucid\Modular\newModule',
+            'Lucid\Modular\enable',
+            'Lucid\Modular\disable',
         ]);
     }
 }
