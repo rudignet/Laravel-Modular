@@ -8,7 +8,7 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
     {
         $this->publishes([ 
             __DIR__.'/modules.php' => config_path('modules.php'),
-            __DIR__.'/migrations') => $this->app->databasePath().'/migrations'
+            __DIR__.'/migrations') => database_path('/migrations')
             ]);
         
         $modules = config('modules._modules',[]);
@@ -43,8 +43,8 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
         });
 
         $this->commands([
-            'Panel\Modules\commands\migrate',
-            'Panel\Modules\commands\test'
+            'Lucid\Modular\commands\migrate',
+            'Lucid\Modular\commands\test'
         ]);
     }
 }
