@@ -6,7 +6,10 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
 {
     public function boot()
     {
-        $this->publishes([ __DIR__.'/modules.php' => config_path('modules.php') ]);
+        $this->publishes([ 
+            __DIR__.'/modules.php' => config_path('modules.php'),
+            __DIR__.'/migrations') => $this->app->databasePath().'/migrations'
+            ]);
         
         $modules = config('modules._modules',[]);
         $path = config('modules.path');
