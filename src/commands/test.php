@@ -31,7 +31,8 @@ class test extends Command
     {
         parent::__construct();
         $this->addArgument('name',InputArgument::OPTIONAL,'Module name');
-        $this->addUsage('modules:test [opt ModuleName]');
+        $this->addArgument('config',InputArgument::OPTIONAL,'Config file or key');
+        $this->addUsage('modules:test [opt ModuleName] [opt configFile]');
     }
 
     /**
@@ -40,18 +41,23 @@ class test extends Command
      */
     public function handle()
     {
+        $config = $this->argument('config','modules');
+        if(empty($config)) {
+            $this->error("Config key $config doesn't exists");
+            return false;
+        }
         $moduleName = $this->argument('name');
         if($moduleName){
-            $this->testModule($moduleName);
+            $this->testModule($moduleName,$config);
         }else //If not modulename we test all modules
-            foreach(\Config::get('modules._modules') as $moduleName)
-                $this->testModule($moduleName);
+            foreach(\Config::get($config.'._modules') as $moduleName)
+                $this->testModule($moduleName,$config);
 
     }
 
-    public function testModule($moduleName){
+    public function testModule($moduleName,$config){
 
-        $path = config('modules.path')."$moduleName/tests/";
+        $path = config($config.'.path')."$moduleName/tests/";
         if(!is_dir($path) || !count(\File::allFiles($path))) {
             $this->warn('No tests found for module ' . $moduleName);
             return false;
