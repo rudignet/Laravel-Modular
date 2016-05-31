@@ -7,9 +7,15 @@ Structure to use laravel as modular system
 3. Run ```php artisan vendor:publish```
 4. Run ```php artisan migrate```
 
+###Modules activation or desactivation
+To activate or desactivate a module just append it into modules.php _modules on your config folder
+
+####Environement configuration
+You can specify in your .env file another config file for modules using the key ```MODULES_CONFIG_FILE``` Ex: Use ```MODULES_CONFIG_FILE=modules_my_site``` tu use file modules_my_site as configuration file, you can otherwise use ```MODULES_CONFIG_FILE=my_config.modules``` to specify an array inside my_config file
+
 #Create New Module:
 1. Create your module structure with ```php artisan modules:new ModuleName```
-2. Activate your module with ```php artisan modules:enable ModuleName``` (This will add into modules.php the name of the module to be loaded)
+2. Add your module name into _modules inside modules.php or your specific modules configuration file
 
 ##Modules structure
  * boot.php => I'ts loaded when module its instanciated, place here your module routes, hooks, at any thing we enat to load on module boot
