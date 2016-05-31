@@ -48,7 +48,7 @@ class newModule extends Command
 		
 		File::copyDirectory(__DIR__.'/../moduleTemplate/',$path); //Create module dir
 		
-		$this->comment("$moduleName was correctly created, use 'php artisan modules:enable $moduleName' to activate your module");
+		$this->comment("$moduleName was correctly created, donf forget insert $moduleName into _modules array inside modules.php or your specific modules configuration file");
     }
 
 }
