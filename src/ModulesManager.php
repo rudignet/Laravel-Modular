@@ -114,10 +114,10 @@ class ModulesManager
     public static function getAsset($module,$path){
         $path = str_replace(['../','..\\'],'',$path);
 
-        if(!file_exists(config('modules.path')."$module/assets/$path"))
+        if(!file_exists(config(env('MODULES_CONFIG_FILE', 'modules').'.path')."$module/assets/$path"))
             abort(404);
 
-        return response()->download(config('modules.path')."$module/assets/$path",null,['Content-Type' => ''],'inline');
+        return response()->download(config(env('MODULES_CONFIG_FILE', 'modules').'.path')."$module/assets/$path",null,['Content-Type' => ''],'inline');
     }
 
     /**
