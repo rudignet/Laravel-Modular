@@ -8,7 +8,7 @@ Structure to use laravel as modular system
 4. Run ```php artisan migrate```
 
 ###Modules activation or desactivation
-To activate or desactivate a module just append it into modules.php _modules on your config folder
+To activate or desactivate a module just insert your moduleName on _modules array into your modules config file
 
 ####Environement configuration
 You can specify in your .env file another config file for modules using the key ```MODULES_CONFIG_FILE``` Ex: Use ```MODULES_CONFIG_FILE=modules_my_site``` tu use file modules_my_site as configuration file, you can otherwise use ```MODULES_CONFIG_FILE=my_config.modules``` to specify an array inside my_config file
@@ -86,11 +86,11 @@ Remember that if you want to use a file from your module assets folder you must 
 
 ##Migrations
 To execute your module migrations run ```artisan modules:migrate ModuleName```
-
 If you want to rollback a migration use ```artisan modules:migrate ModuleName --down```
+If your modules configuration file is different than modules.php you must specify your config file or config key like this ```artisan modules:migrate ModuleName YourConfigFile``` or ```artisan modules:migrate ModuleName YourConfigFile --down```
 
 #Tests
-To execute your module tests run ```artisan modules:test ModuleName``` or just ```artisan modules:test``` if you want to run all activated modules tests
+To execute your module tests run ```artisan modules:test ModuleName``` or just ```artisan modules:test``` if you want to run all activated modules tests. If your modules configuration file is different than modules.php you must specify your config file or config key like this ```artisan modules:test ModuleName YourConfigFile``` or ```artisan modules:test YourConfigFile```
 
 Remember all test will be runned as if it's into your laravel test folder and not into your module test folder, then all test must to extend from TestBase without any namespace
 	
