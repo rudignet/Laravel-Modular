@@ -30,8 +30,9 @@ class migrate extends Command
     {
         parent::__construct();
         $this->addArgument('name',InputArgument::REQUIRED,'Module name');
+        $this->addArgument('config',InputArgument::OPTIONAL,'(optional) Config file or key');
         $this->addOption('down');
-        $this->addUsage('modules:migrate ModuleName or modules:migrate ModuleName --down to rollBack');
+        $this->addUsage('modules:migrate ModuleName [opt]configFile or modules:migrate ModuleName [opt]configFile --down to rollBack');
     }
 
     /**
@@ -41,9 +42,14 @@ class migrate extends Command
     public function handle()
     {
         $moduleName = $this->argument('name');
-        $path = config('modules.path')."$moduleName/migrations/";
+        $config = $this->argument('config','modules');
+        if(empty($config)) {
+            $this->error("Config key $config doesn't exists");
+            return false;
+        }
+        $path = config($config.'.path')."$moduleName/migrations/";
         if(!is_dir($path)) {
-            $this->error('There\'s not any module with name ' . $moduleName . ' or it hasn\'t a migrations folder');
+            $this->error("There's not any module with name $moduleName or it hasn\'t a migrations folder");
             return false;
         }
 
