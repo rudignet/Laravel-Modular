@@ -11,8 +11,8 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
             __DIR__.'/migrations') => database_path('/migrations')
             ]);
         
-        $modules = config('modules._modules',[]);
-        $path = config('modules.path');
+        $modules = config(env('MODULES_CONFIG_FILE', 'modules').'._modules',[]);
+        $path = config(env('MODULES_CONFIG_FILE', 'modules').'.path');
 
         foreach ($modules as $module) {
             if(file_exists($path.$module.'/boot.php')) {
