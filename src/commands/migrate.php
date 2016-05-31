@@ -30,9 +30,9 @@ class migrate extends Command
     {
         parent::__construct();
         $this->addArgument('name',InputArgument::REQUIRED,'Module name');
-        $this->addArgument('config',InputArgument::OPTIONAL,'(optional) Config file or key');
+        $this->addArgument('config',InputArgument::OPTIONAL,'Config file or key');
         $this->addOption('down');
-        $this->addUsage('modules:migrate ModuleName [opt]configFile or modules:migrate ModuleName [opt]configFile --down to rollBack');
+        $this->addUsage('modules:migrate ModuleName [opt configFile] or modules:migrate ModuleName [opt configFile] --down to rollBack');
     }
 
     /**
