@@ -53,7 +53,7 @@ class newModule extends Command
         if($result) {
             //Replacing test template tags
             $dir_exp = explode('/',$path);
-            $namespace = app()->getNamespace().'\\\\'.$dir_exp[count($dir_exp) - 3].'\\\\'.$dir_exp[count($dir_exp) - 2];
+            $namespace = '\\\\'.$dir_exp[count($dir_exp) - 3].'\\\\'.$dir_exp[count($dir_exp) - 2];
             File::put($path.'boot.php',str_replace(['{MODULE_NAMESPACE}','{MODULE_NAME}'],[$namespace,$moduleName],File::get($path.'boot.php')));
 
             $assets_url = "modules/$moduleName/";
