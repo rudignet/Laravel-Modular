@@ -63,7 +63,8 @@ class newModule extends Command
             File::put($path.'tests/ExampleTest.php',str_replace(['{MODULE_URL}','{MODULE_NAME}'],[$assets_url,$moduleName],File::get($path.'tests/ExampleTest.php')));
 
             $this->info("$moduleName was correctly created");
-            $this->info("Your module example was placed on this url: {your_laravel_url}/modules/$moduleName , to activate your module add $moduleName to '_modules' array inside modular config file");
+            $this->info("Your module example was placed on this url: {your_laravel_url}/modules/$moduleName");
+            $this->warn("DON'T FORGET activate your module adding $moduleName to '_modules' array inside modular config file");
         }else
             $this->error('An error was ocurred while ' . $moduleName . ' was created');
     }
