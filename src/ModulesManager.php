@@ -68,7 +68,10 @@ class ModulesManager
                 continue;
 
             foreach(self::$hooks[$attachName][$name] as $function)
-                $result .= (string)$function();
+                if(is_callable($function))
+                    $result .= (string)$function();
+                else
+                    $result .= (string)$function;
         }
         return "<!-- Hook $attachName --> ".chr(10).$result.chr(10)."<!-- /Hook $attachName -->";
     }
