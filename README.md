@@ -101,4 +101,6 @@ If your modules configuration file is different than modules.php you must specif
 
 Remember all test will be runned as if it's into your laravel test folder and not into your module test folder, then all test must to extend from TestBase without any namespace
 	
-	
+#Artisan commands
+You can add your module artisan commands easily, just add into _commands array inside your module config.php file the className for your command. Ex: ``` '_commands' => ['App\Modules\MyModule\commands\testCommand'] ```
+

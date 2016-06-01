@@ -43,10 +43,11 @@ class migrate extends Command
     {
         $moduleName = $this->argument('name');
         $config = $this->argument('config');
-        if(empty($config)) {
-            $this->error("Config key $config doesn't exists");
+        if(empty(config($config.'.path'))) {
+            $this->error("Config key {$config}.path doesn't exists, maybe you must specify a config file or key to this command");
             return false;
         }
+
         $path = config($config.'.path')."$moduleName/migrations/";
         if(!is_dir($path)) {
             $this->error("There's not any module with name $moduleName or it hasn\'t a migrations folder");

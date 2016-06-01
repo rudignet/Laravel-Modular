@@ -13,6 +13,10 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
         
         $modules = config(env('MODULES_CONFIG_FILE', 'modules').'._modules',[]);
         $path = config(env('MODULES_CONFIG_FILE', 'modules').'.path');
+        $commands = [];
+
+        if(empty($modules))
+            error_log('Any module was found in config: '.env('MODULES_CONFIG_FILE', 'modules').'._modules'.' ¿Are you sure your configuration is ok?');
 
         foreach ($modules as $module) {
             if(file_exists($path.$module.'/boot.php')) {
@@ -27,16 +31,19 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
             if(is_dir($path.$module.'/lang')) {
                 $this->loadTranslationsFrom($path.$module.'/lang', $module);
             }
+
+            $commands = array_merge($commands,config("{$module}._commands",[]));
         }
 
         //Route for module assets
         \Route::get('modules/{moduleName}/{path}',function($moduleName,$path){
             return ModulesManager::getAsset($moduleName,$path);
         })->where('path', '(.*)');
+
+        $this->commands($commands);
     }
 
     public function register(){
-        $this->mergeConfigFrom(__DIR__.'/modules.php', 'modules'); 
 
         $this->app->singleton(ModulesManager::class, function ($app) {
             return new ModulesManager();

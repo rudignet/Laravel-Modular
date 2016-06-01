@@ -42,10 +42,11 @@ class test extends Command
     public function handle()
     {
         $config = $this->argument('config');
-        if(empty(config($config))) {
-            $this->error("Config key $config doesn't exists");
+        if(empty(config($config.'.path'))) {
+            $this->error("Config key {$config}.path doesn't exists, maybe you must specify a config file or key to this command");
             return false;
         }
+
         $moduleName = $this->argument('name');
         if($moduleName != 'all'){
             $this->testModule($moduleName,$config);
