@@ -38,7 +38,12 @@ class ModulesManager
             self::$hooks[$attachName] = [];
 
         self::$hooks[$attachName][$hookName][] = $callable;
-        HookPosition::firstOrCreate(['attach_name' => $attachName, 'name' =>  $hookName]);
+
+        try {
+            HookPosition::firstOrCreate(['attach_name' => $attachName, 'name' => $hookName]);
+        }catch(\PDOException $e){
+            error_log('Modular couldn\'t connect to database, hooks order was disabled. Check that you have run Modular migrations');
+        }
     }
 
     /**
@@ -51,9 +56,14 @@ class ModulesManager
             return false;
 
         $result = '';
-        $hooks = HookPosition::where('attach_name', '=', $attachName)->orderBy('order', 'ASC')->get();
-        foreach($hooks as $hook){
-            $name = $hook->name;
+        try {
+            $hooks = HookPosition::where('attach_name', '=', $attachName)->orderBy('order', 'ASC')->get();
+        }catch(\PDOException $e){
+            $hooks = !empty(self::$hooks[$attachName]) ? self::$hooks[$attachName] : [];
+        }
+
+        foreach($hooks as $index => $hook){
+            $name = is_object($hook) ? $hook->name : $index;
             if(empty(self::$hooks[$attachName][$name]))
                 continue;
 

@@ -35,29 +35,32 @@ Route sample: ``` Route::group(['middleware' => ['web','auth'], 'as'=>'admin::',
 
 ##Hooks:
 Hooks allow to register funtions that can be called from your app views
-To add a hook use ```ModuleManager::attachHook(string Point, string Name, callable Closure)```
+To add a hook use ```ModulesManager::attachHook(string Point, string Name, callable Closure)``` normally hooks must be added into boot.php 
 
 **[Parameters]:**
 * Point: Attach point where the hook will be assigned
 * Name: Internal unique name for the hook, use always {module_name}::{hook_name} as name. Ex MyModule::MyHook
-* Closure: This closure must return an string that will be concatenated with all other hooks attached to the same point when ```ModuleManager::getHook({attach_point})``` was called
+* Closure: This closure must return an string that will be concatenated with all other hooks attached to the same point when ```ModulesManager::getHook({attach_point})``` was called
 
 ###Hooks ordenation:
-Each time ``` ModuleManager::attachHook ``` was called, hook will be saved into database, that's allow to order hook depending your preferences, if you don't set an order all hooks will be ordered between his insertion into database
+Each time ``` ModulesManager::attachHook ``` was called, hook will be saved into database, that's allow to order hook depending your preferences, if you don't set an order all hooks will be ordered between his insertion into database
 Hook Example: 
-```ModuleManager::attachHook('admin.actionBar','MyModule::HookAction1', function(){ return 'TEST-HOOK'; });```
+```ModulesManager::attachHook('admin.actionBar','MyModule::HookAction1', function(){ return 'TEST-HOOK'; });```
+
+###Hooks use:
+To get your registered hooks content use ```ModulesManager::getHook({attach_point})``` this will return all html returned by all hooks was registered to this attach_point
 
 ##Module public methods registration
 This tool allow you to register a method that can be called as a hook, but in this case it can returns any kind of result, that allow you to set any method of your module public
-To register a method as public use ``` ModuleManager::registerModuleFunc(string Name, callable Closure); ```
+To register a method as public use ``` ModulesManager::registerModuleFunc(string Name, callable Closure); ```
 
 **[Parameters]:**
 * Name: Public unique name for the function, use always {module_name}::{function_name} as name. Ex MyModule::MyFunction
 * Closure: Function will receive an array of params and return any kind of result, Ex: function($params){ /* some code */ }
 	
-###Calling a module public function
-After register a method on your module you can acces from anywhere using
-```ModuleManager::callModuleFunc(string Name, array Params = [], Default = null)``` or ```callModuleFuncOrFail``` with same signature if you want to generate an exception if {method_name} has not been registered
+###Calling a module public method
+After register a method on your module you can access it from anywhere using
+```ModulesManager::callModuleFunc(string Name, array Params = [], Default = null)``` or ```callModuleFuncOrFail``` with same signature if you want to generate an exception if {method_name} has not been registered
 
 **[Parameters]:**
 * Name: Public unique name for the function, use always {module_name}::{function_name} as name. Ex MyModule::MyFunction
