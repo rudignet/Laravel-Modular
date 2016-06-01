@@ -30,7 +30,7 @@ class migrate extends Command
     {
         parent::__construct();
         $this->addArgument('name',InputArgument::REQUIRED,'Module name');
-        $this->addArgument('config',InputArgument::OPTIONAL,'Config file or key');
+        $this->addArgument('config',InputArgument::OPTIONAL,'Config file or key','modules');
         $this->addOption('down');
         $this->addUsage('modules:migrate ModuleName [opt configFile] or modules:migrate ModuleName [opt configFile] --down to rollBack');
     }
@@ -42,7 +42,7 @@ class migrate extends Command
     public function handle()
     {
         $moduleName = $this->argument('name');
-        $config = $this->argument('config','modules');
+        $config = $this->argument('config');
         if(empty($config)) {
             $this->error("Config key $config doesn't exists");
             return false;

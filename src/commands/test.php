@@ -30,8 +30,8 @@ class test extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->addArgument('name',InputArgument::OPTIONAL,'Module name');
-        $this->addArgument('config',InputArgument::OPTIONAL,'Config file or key');
+        $this->addArgument('name',InputArgument::OPTIONAL,'Module name','all');
+        $this->addArgument('config',InputArgument::OPTIONAL,'Config file or key','modules');
         $this->addUsage('modules:test [opt ModuleName] [opt configFile]');
     }
 
@@ -41,13 +41,13 @@ class test extends Command
      */
     public function handle()
     {
-        $config = $this->argument('config','modules');
-        if(empty($config)) {
+        $config = $this->argument('config');
+        if(empty(config($config))) {
             $this->error("Config key $config doesn't exists");
             return false;
         }
         $moduleName = $this->argument('name');
-        if($moduleName){
+        if($moduleName != 'all'){
             $this->testModule($moduleName,$config);
         }else //If not modulename we test all modules
             foreach(\Config::get($config.'._modules') as $moduleName)
@@ -65,11 +65,10 @@ class test extends Command
         $this->info("Testing module $moduleName");
         $process = new Process("phpunit $path");
         $process->run(function ($type, $buffer) {
-            if (Process::ERR === $type)
+            if (Process::ERR === $type || strpos($buffer,'failure:'))
                 $this->error($buffer);
             else
                 $this->info($buffer);
-
         });
     }
 

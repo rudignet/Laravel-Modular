@@ -94,7 +94,7 @@ If your modules configuration file is different than modules.php you must specif
 #Tests
 To execute your module tests run ```artisan modules:test ModuleName``` or just ```artisan modules:test``` if you want to run all activated modules tests. 
 
-If your modules configuration file is different than modules.php you must specify your config file or config key like this ```artisan modules:test ModuleName YourConfigFile``` or ```artisan modules:test YourConfigFile```
+If your modules configuration file is different than modules.php you must specify your config file or config key like this ```artisan modules:test ModuleName YourConfigFile``` or ```artisan modules:test all YourConfigFile``` for all tests
 
 Remember all test will be runned as if it's into your laravel test folder and not into your module test folder, then all test must to extend from TestBase without any namespace
 	

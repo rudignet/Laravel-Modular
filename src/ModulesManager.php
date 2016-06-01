@@ -20,8 +20,6 @@
 
 namespace Lucid\Modular;
 
-use Lucid\Modular\HookPosition;
-
 class ModulesManager
 {
     private static $hooks = [];
