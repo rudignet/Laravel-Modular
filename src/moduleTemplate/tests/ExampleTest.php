@@ -14,6 +14,6 @@ class ExampleTest extends TestCase
     public function testBasicExample()
     {
         $this->visit('/{MODULE_URL}')
-             ->see('{MODULE_NAME}');
+             ->see('{MODULE_NAME} Module');
     }
 }
