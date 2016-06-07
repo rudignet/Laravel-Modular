@@ -14,14 +14,12 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
         $modules = config(env('MODULES_CONFIG_FILE', 'modules').'._modules',[]);
         $path = config(env('MODULES_CONFIG_FILE', 'modules').'.path');
         $commands = [];
+        $boots = [];
 
         if(empty($modules))
             error_log('Any module was found in config: '.env('MODULES_CONFIG_FILE', 'modules').'._modules'.' ¿Are you sure your configuration is ok?');
 
         foreach ($modules as $module) {
-            if(file_exists($path.$module.'/boot.php')) {
-                include $path.$module.'/boot.php';
-            }
             if(is_dir($path.$module.'/views')) {
                 $this->loadViewsFrom($path.$module.'/views', $module);
             }
@@ -31,7 +29,9 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
             if(is_dir($path.$module.'/lang')) {
                 $this->loadTranslationsFrom($path.$module.'/lang', $module);
             }
-
+            if(file_exists($path.$module.'/boot.php')) {
+                $boots[] = $path.$module.'/boot.php';
+            }
             $commands = array_merge($commands,config("{$module}._commands",[]));
         }
 
@@ -41,6 +41,10 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
         })->where('path', '(.*)');
 
         $this->commands($commands);
+
+        foreach($boots as $boot)
+            include $boot;
+
     }
 
     public function register(){

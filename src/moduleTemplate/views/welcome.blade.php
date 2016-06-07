@@ -4,7 +4,7 @@
         <title>Module {MODULE_NAME}</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-        <link href="../{ASSETS_URL}app.css" rel="stylesheet" type="text/css">
+        <link href={!! url("{ASSETS_URL}app.css") !!} rel="stylesheet" type="text/css">
 
     </head>
     <body>

@@ -20,6 +20,8 @@
 
 namespace Lucid\Modular;
 
+use League\Flysystem\Util\MimeType;
+
 class ModulesManager
 {
     private static $hooks = [];
@@ -124,11 +126,11 @@ class ModulesManager
      */
     public static function getAsset($module,$path){
         $path = str_replace(['../','..\\'],'',$path);
-
-        if(!file_exists(config(env('MODULES_CONFIG_FILE', 'modules').'.path')."$module/assets/$path"))
+        $realPath = config(env('MODULES_CONFIG_FILE', 'modules').'.path')."$module/assets/$path";
+        if(!file_exists($realPath))
             abort(404);
 
-        return response()->download(config(env('MODULES_CONFIG_FILE', 'modules').'.path')."$module/assets/$path",null,['Content-Type' => ''],'inline');
+        return response()->download($realPath,null,['Content-Type' => MimeType::detectByFilename($realPath)],'inline');
     }
 
     /**

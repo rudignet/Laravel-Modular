@@ -1,10 +1,12 @@
 <?php
 
+namespace MODULE_REAL_NAMESPACE;
 use \Lucid\Modular\ModulesManager;
+use \Route;
 
 //Test route for test purposing
-Route::group(['middleware' => ['web'], 'as'=>'{MODULE_NAME}::', 'namespace' => app()->getNamespace().'{MODULE_NAMESPACE}'], function() {
-    Route::get('modules/{MODULE_NAME}',function(){
+Route::group(['middleware' => ['web'], 'prefix' => 'modules/{MODULE_NAME}', 'as'=>'{MODULE_NAME}::', 'namespace' => __NAMESPACE__], function() {
+    Route::get('/',function(){
         return view('{MODULE_NAME}::welcome',['foo' => config('{MODULE_NAME}.foo')]);
     });
 });
