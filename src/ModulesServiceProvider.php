@@ -56,7 +56,7 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
 
     public function register(){
 
-        $this->app->singleton(ModulesManager::class, function ($app) {
+        $this->app->singleton('lucid-modular', function ($app) {
             return new ModulesManager();
         });
 
