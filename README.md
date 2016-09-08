@@ -3,7 +3,8 @@ Structure to use laravel as modular system
 
 ## To install this app:
 1. Include `"lucidnetworks/laravel-modular": "^1.0"` on your require composer.json
-2. Add `Lucid\Modular\ModulesServiceProvider::class` to your providers array
+2. Add `Lucid\Modular\ModulesServiceProvider::class` to your config/app providers array
+3. Add `'ModulesManager' => \Lucid\Modular\ModularFacade::class` to your config/app aliases array
 3. Run `php artisan vendor:publish`
 4. Run `php artisan migrate`
 
