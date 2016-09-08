@@ -20,6 +20,9 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
             error_log('Any module was found in config: '.env('MODULES_CONFIG_FILE', 'modules').'._modules'.' ¿Are you sure your configuration is ok?');
 
         foreach ($modules as $module) {
+            $dir_exp = explode('/',$path);
+            $namespace = app()->getNamespace().$dir_exp[count($dir_exp) - 2].'\\'.$module;
+
             if(is_dir($path.$module.'/views')) {
                 $this->loadViewsFrom($path.$module.'/views', $module);
             }
@@ -30,7 +33,6 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
                 $this->loadTranslationsFrom($path.$module.'/lang', $module);
             }
             if(file_exists($path.$module.'/ServiceProvider.php')) {
-                $namespace = app()->getNamespace()."\\$path\\$module";
                 $serviceProviders[$namespace] = $path.$module.'/ServiceProvider.php';
             }
             $commands = array_merge($commands,config("{$module}._commands",[]));
@@ -44,10 +46,10 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
         $this->commands($commands);
 
         foreach($serviceProviders as $namespace => $serviceProvider){
-            include $serviceProvider;
             $ServiceProviderClass = "$namespace\\ServiceProvider";
+
             if(method_exists($ServiceProviderClass,'boot'))
-                    $ServiceProviderClass->boot();
+                $ServiceProviderClass::boot();
         }
 
     }
