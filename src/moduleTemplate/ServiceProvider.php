@@ -20,8 +20,5 @@ class ServiceProvider
         ModulesManager::attachHook('{MODULE_NAME}.attachPoint1','{MODULE_NAME}::testHook', function(){ return 'TEST-HOOK'; });
     }
 
-    public static function register(){
-        // Register code
-    }
 }
 
