@@ -11,6 +11,6 @@ class ModularFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'modular';
+        return 'lucid-modular';
     }
 }
