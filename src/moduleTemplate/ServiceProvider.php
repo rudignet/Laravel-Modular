@@ -5,9 +5,9 @@ namespace MODULE_REAL_NAMESPACE;
 use \Lucid\Modular\ModulesManager;
 use \Route;
 
-class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
+class ServiceProvider
 {
-    public function boot()
+    public static function boot()
     {
         // Boot code, routes, hooks, etc
         //Test route for test purposing
@@ -16,12 +16,11 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
                 return view('{MODULE_NAME}::welcome',['foo' => config('{MODULE_NAME}.foo')]);
             });
         });
+        
         ModulesManager::attachHook('{MODULE_NAME}.attachPoint1','{MODULE_NAME}::testHook', function(){ return 'TEST-HOOK'; });
     }
 
-
-
-    public function register(){
+    public static function register(){
         // Register code
     }
 }
