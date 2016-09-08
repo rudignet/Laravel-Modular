@@ -14,7 +14,7 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
         $modules = config(env('MODULES_CONFIG_FILE', 'modules').'._modules',[]);
         $path = config(env('MODULES_CONFIG_FILE', 'modules').'.path');
         $commands = [];
-        $boots = [];
+        $serviceProviders = [];
 
         if(empty($modules))
             error_log('Any module was found in config: '.env('MODULES_CONFIG_FILE', 'modules').'._modules'.' ¿Are you sure your configuration is ok?');
@@ -29,8 +29,9 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
             if(is_dir($path.$module.'/lang')) {
                 $this->loadTranslationsFrom($path.$module.'/lang', $module);
             }
-            if(file_exists($path.$module.'/boot.php')) {
-                $boots[] = $path.$module.'/boot.php';
+            if(file_exists($path.$module.'/ServiceProvider.php')) {
+                $namespace = app()->getNamespace()."\\$path\\$module";
+                $serviceProviders[$namespace] = $path.$module.'/ServiceProvider.php';
             }
             $commands = array_merge($commands,config("{$module}._commands",[]));
         }
@@ -42,8 +43,12 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
 
         $this->commands($commands);
 
-        foreach($boots as $boot)
-            include $boot;
+        foreach($serviceProviders as $namespace => $serviceProvider){
+            include $serviceProvider;
+            $ServiceProviderClass = "$namespace\\ServiceProvider";
+            if(method_exists($ServiceProviderClass,'boot'))
+                    $ServiceProviderClass->boot();
+        }
 
     }
 
