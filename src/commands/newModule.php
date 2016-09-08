@@ -64,7 +64,7 @@ class newModule extends Command
 
             $this->info("$moduleName was correctly created");
             $this->info("Your module example was placed on this url: {your_laravel_url}/modules/$moduleName");
-            $this->warn("DON'T FORGET activate your module adding $moduleName to '_modules' array inside modular config file");
+            $this->warn("DON'T FORGET activate your module adding $moduleName to '_modules' array inside config/modules");
         }else
             $this->error('An error was ocurred while ' . $moduleName . ' was created');
     }
