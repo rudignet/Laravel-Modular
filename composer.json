@@ -4,7 +4,7 @@
     "keywords": ["laravel", "modular", "modules", "module", "structure", "pattern", "Artem", "Schander", "l5modular", "artisan", "generator"],
     "homepage": "https://github.com/rudignet/Laravel-Modular",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.0.0-beta",
     "authors": [
         {
             "name": "Lucid Networks",
@@ -19,6 +19,5 @@
         "psr-4": {
             "Lucid\\Modular\\": "src/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
