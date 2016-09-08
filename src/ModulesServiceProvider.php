@@ -34,7 +34,7 @@ class ModulesServiceProvider extends  \Illuminate\Support\ServiceProvider
             }
             $commands = array_merge($commands,config("{$module}._commands",[]));
         }
-
+                
         //Route for module assets
         \Route::get('modules/{moduleName}/{path}',function($moduleName,$path){
             return ModulesManager::getAsset($moduleName,$path);
